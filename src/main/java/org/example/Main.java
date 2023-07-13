@@ -1,35 +1,39 @@
 package org.example;
 import org.apache.log4j.BasicConfigurator;
+import org.example.task1.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.*;
-
 
 
 public class Main {
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
-    private static final String PASSWORD_STRING = "tr9g!*Hps";
-    public static void main(String[] args) {
+    private static final Logger loggerMain = LoggerFactory.getLogger(Main.class);
+
+    public static void main(String[] args) throws SQLException {
+
+        // configure logger
         BasicConfigurator.configure();
-        String dbUrl = "jdbc:h2:~/test";
-        //,"sa",PASSWORD_STRING
-        try(Connection conn = DriverManager.getConnection(dbUrl,"sa","");
-            Statement stmt = conn.createStatement()){
-            ResultSet rs = stmt.executeQuery("SELECT table_name FROM INFORMATION_SCHEMA.TABLES" );
+        // get database connection
+        Connection  conn = Database.getInstance().getConnection();
+        // get list of database tables
+        try(Statement stmt = conn.createStatement()) {
+            loggerMain.info("Execute SQL statement");
+            ResultSet rs = stmt.executeQuery("SELECT table_name FROM INFORMATION_SCHEMA.TABLES");
+            // output result to screen
             int i=0;
+            String getStr;
             while(rs.next()){
-                if(i==0)logger.info("Table Number | Table Name ");
-                logger.info("           {} |             {}",i ,rs.getString("table_name"));
+                if(i==0) loggerMain.info("Table Number | Table Name ");
+                getStr=rs.getString("table_name");
+                loggerMain.info(" {}      |             {}",i ,getStr);
                 i++;
             }
+        } catch(SQLException e1){
+            loggerMain.error("Error retrieving data from database. Check SQL expression.");
 
-      } catch (SQLException e) {
-        e.printStackTrace();
-    }
-
-        logger.info("Hello JDBC world!");
+        }
+        loggerMain.info("Application executed successfully");
 
     }
 }
