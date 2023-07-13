@@ -1,6 +1,7 @@
 package org.example.task2;
 
 import org.apache.log4j.BasicConfigurator;
+import org.example.fileservicies.SQLFileReader;
 import org.example.task1.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,23 +17,19 @@ import java.util.Arrays;
 public class DatabaseInitService {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseInitService.class);
     private  Connection conn;
-   private String sqlStatementList[];
+   private  String[] sqlStatementList;
+
     DatabaseInitService(){
         conn = Database.getInstance().getConnection();
-        readSQLfromFile();
+        sqlStatementList=(new SQLFileReader("init_db.sql")).getSqlStatements();
     }
 
 
     public static void main(String[] args) throws SQLException {
         // configure logger
         BasicConfigurator.configure();
-
         DatabaseInitService dbInitService = new DatabaseInitService();
         dbInitService.executeInit_db_SQL();
-
-
-
-
     }
 
     public void executeInit_db_SQL() throws SQLException {
@@ -48,23 +45,5 @@ public class DatabaseInitService {
         logger.info("Close connection");
         conn.close();
     }
-    private void readSQLfromFile(){
-        StringBuilder stringFromFile = new StringBuilder();
-        String filePath = "src\\main\\resources\\sql\\init_db.sql";
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
 
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringFromFile.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.info(e.getMessage());
-        }
-        sqlStatementList=stringFromFile.toString().split(";");
-        Arrays.stream(sqlStatementList).forEach(logger::info);
-
-
-    }
 }
