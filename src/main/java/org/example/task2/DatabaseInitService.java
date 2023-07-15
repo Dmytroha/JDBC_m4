@@ -41,9 +41,12 @@ public class DatabaseInitService {
 
         }catch(SQLException e1){
             e1.printStackTrace();
+        }finally {
+            logger.info("Close connection");
+            conn.close();
         }
-        logger.info("Close connection");
-        conn.close();
+
+
     }
 
 }

@@ -1,4 +1,4 @@
--- Додавання працівників
+
 INSERT INTO worker (NAME, BIRTHDAY, LEVEL, SALARY)
 VALUES ('John Doe', '1990-01-01', 'Junior', 2000),
        ('Jane Smith', '1985-02-02', 'Senior', 6000),
@@ -11,7 +11,6 @@ VALUES ('John Doe', '1990-01-01', 'Junior', 2000),
        ('Grace Green', '1986-09-09', 'Senior', 7000),
        ('Henry Hall', '1995-10-10', 'Junior', 3000);
 
--- Додавання клієнтів
 INSERT INTO client (NAME)
 VALUES ('Max Berry'),
        ('Amanda Litz'),
@@ -19,7 +18,7 @@ VALUES ('Max Berry'),
        ('Mikki Shulz'),
        ('Tuko Salamanca');
 
--- Додавання проєктів
+
 INSERT INTO project (CLIENT_ID, START_DATE, FINISH_DATE)
 VALUES (1, '2022-01-01', '2023-01-01'),
        (1, '2022-02-01', '2023-02-01'),
@@ -32,7 +31,7 @@ VALUES (1, '2022-01-01', '2023-01-01'),
        (5, '2022-09-01', '2023-09-01'),
        (5, '2022-09-01', '2023-10-01');
 
--- Назначення працівників на проєкти
+
 INSERT INTO project_worker (PROJECT_ID, WORKER_ID)
 VALUES (1, 1),
        (1, 2),

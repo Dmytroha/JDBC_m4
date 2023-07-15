@@ -1,7 +1,6 @@
 package org.example.fileservicies;
 
 import org.apache.log4j.BasicConfigurator;
-import org.example.task2.DatabaseInitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,28 +10,40 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class SQLFileReader {
-    private static final Logger logger = LoggerFactory.getLogger(DatabaseInitService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SQLFileReader.class);
+    private String sqlFileName;
+    private  String fullPathToSQLFile;
+    private static final String PathToSQLFile="src\\main\\resources\\sql\\";
 
     public String[] getSqlStatements() {
         return sqlStatements;
     }
 
+
+    public SQLFileReader() {
+
+    }
+
     private String[] sqlStatements;
-    private String sqlFileName;
-    private final String fullPathToSQLFile;
+
+    public void setSqlFileName(String sqlFileName) {
+        this.sqlFileName = sqlFileName;
+        this.fullPathToSQLFile=PathToSQLFile+this.sqlFileName;
+        readSQLFromFile();
+    }
+
+
     public SQLFileReader(String sqlFileName){
         BasicConfigurator.configure();
         this.sqlFileName=sqlFileName;
-        this.fullPathToSQLFile="src\\main\\resources\\sql\\"+this.sqlFileName;
+        this.fullPathToSQLFile=PathToSQLFile+this.sqlFileName;
         readSQLFromFile();
     }
 
     private void readSQLFromFile(){
         StringBuilder stringFromFile = new StringBuilder();
-
         try (BufferedReader bufferedReader =
                      new BufferedReader(new FileReader(fullPathToSQLFile))){
-
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 stringFromFile.append(line);
@@ -41,7 +52,7 @@ public class SQLFileReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // split into separate expressions
+        // split into separate SQL expressions
         sqlStatements=stringFromFile.toString().split(";");
         // Output result to screen. Use stream API because I love streams. Firstly, this is nice.
         Arrays.stream(sqlStatements).forEach(logger::info);
