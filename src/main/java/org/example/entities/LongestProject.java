@@ -11,4 +11,10 @@ public class LongestProject {
     private String name;
     private int monthCount;
 
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", name: "+ this.name +
+                ", monthCount:" + this.monthCount;
+    }
 }

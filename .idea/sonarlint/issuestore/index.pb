@@ -40,3 +40,9 @@ G.idea/sonarlint/issuestore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d,b\4\b4
 Q.idea/sonarlint/securityhotspotstore/0/5/05efc8b1657769a27696d478ded1e95f38737233,2\5\2534b7ffebad46793fc4d77da07aca83b23dd835
 w
 G.idea/sonarlint/issuestore/0/5/05efc8b1657769a27696d478ded1e95f38737233,3\c\3c8c56407c35e5f5ebbd6c7250a79af8128a13a6
+]
+-src/main/java/org/example/task1/Database.java,c\5\c5828c5670f7e97f478c7bb1b0c2625177345924
+h
+8src/main/java/org/example/task2/DatabaseInitService.java,e\6\e618ec5922207a46d6e5108d2598990c9f7432f8
+l
+<src/main/java/org/example/task3/DatabasePopulateService.java,8\b\8b1cb0cf881b67e6bfdd803cc2cb6774da8a24c5

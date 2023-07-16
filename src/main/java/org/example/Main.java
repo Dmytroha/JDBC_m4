@@ -1,13 +1,10 @@
 package org.example;
 import org.apache.log4j.BasicConfigurator;
-import org.example.task1.Database;
 import org.example.task4.DatabaseQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
 
-import static java.lang.System.out;
 
 
 public class Main {
@@ -17,32 +14,20 @@ public class Main {
 
         // configure logger
         BasicConfigurator.configure();
-        // get database connection
-        Connection  conn = Database.getInstance().getConnection();
-        // get list of database tables
-        try(Statement stmt = conn.createStatement()) {
-            loggerMain.info("Execute SQL statement");
-            ResultSet rs = stmt.executeQuery("SELECT table_name FROM INFORMATION_SCHEMA.TABLES");
-            // output result to screen
-            int i=0;
-            String getStr;
-            while(rs.next()){
-                if(i==0) loggerMain.info("Table Number | Table Name ");
-                getStr=rs.getString("table_name");
-                loggerMain.info(" {}      |             {}",i ,getStr);
-                i++;
-            }
-        } catch(SQLException e1){
-            loggerMain.error("Error retrieving data from database. Check SQL expression.");
-        }
+
         DatabaseQueryService dtbQrySrvs = new DatabaseQueryService();
-        loggerMain.info("dtbQrySrvs.findLongestProject();");
-        dtbQrySrvs.findLongestProject();
-        dtbQrySrvs.find_max_salary_worker();
-        dtbQrySrvs.find_max_projects_client();
-        dtbQrySrvs.find_max_salary_worker();
-        dtbQrySrvs.find_youngest_eldest_workers();
-        dtbQrySrvs.print_project_prices();
-        loggerMain.info("Application executed successfully");
+
+        loggerMain.info("\n<---------------Find longest project---------->");
+        dtbQrySrvs.findLongestProject().forEach(longestProject -> loggerMain.info(longestProject.toString()));
+        loggerMain.info("\n<---------------Find client with max project---------->");
+        dtbQrySrvs.findMaxProjectsClient().forEach(maxProjectsClient -> loggerMain.info(maxProjectsClient.toString()));
+        loggerMain.info("\n<---------------Find worker with max salary---------->");
+        dtbQrySrvs.findMaxSalaryWorker().forEach(maxSalaryWorker -> loggerMain.info(maxSalaryWorker.toString()));
+        loggerMain.info("\n<---------------Find Youngest Eldest workers---------->");
+        dtbQrySrvs.findYoungestEldestWorkers().forEach(youngestEldestWorker ->
+                                                        loggerMain.info(youngestEldestWorker.toString()));
+        loggerMain.info("\n<---------------Print Project Prices---------->");
+        dtbQrySrvs.printProjectPrices().forEach(projectPrice -> loggerMain.info(projectPrice.toString()));
+        loggerMain.info("\n\n Application executed successfully");
     }
 }

@@ -13,7 +13,7 @@ public class SQLFileReader {
     private static final Logger logger = LoggerFactory.getLogger(SQLFileReader.class);
     private String sqlFileName;
     private  String fullPathToSQLFile;
-    private static final String PathToSQLFile="src\\main\\resources\\sql\\";
+    private static final String PATH_TO_SQL_FILE ="src\\main\\resources\\sql\\";
 
     public String[] getSqlStatements() {
         return sqlStatements;
@@ -28,7 +28,7 @@ public class SQLFileReader {
 
     public void setSqlFileName(String sqlFileName) {
         this.sqlFileName = sqlFileName;
-        this.fullPathToSQLFile=PathToSQLFile+this.sqlFileName;
+        this.fullPathToSQLFile= PATH_TO_SQL_FILE +this.sqlFileName;
         readSQLFromFile();
     }
 
@@ -36,7 +36,7 @@ public class SQLFileReader {
     public SQLFileReader(String sqlFileName){
         BasicConfigurator.configure();
         this.sqlFileName=sqlFileName;
-        this.fullPathToSQLFile=PathToSQLFile+this.sqlFileName;
+        this.fullPathToSQLFile= PATH_TO_SQL_FILE +this.sqlFileName;
         readSQLFromFile();
     }
 
@@ -46,7 +46,7 @@ public class SQLFileReader {
                      new BufferedReader(new FileReader(fullPathToSQLFile))){
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                stringFromFile.append(line);
+                stringFromFile.append(line).append(" ");
             }
 
         } catch (IOException e) {
